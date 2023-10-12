@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 public class SQLStudentDAO implements StudentDAO {
 
-    /**
-     * get a specific student
-     */
+    // Get a specific student
     @Override
 
     public Student get(String CF) throws SQLException{
@@ -39,9 +37,7 @@ public class SQLStudentDAO implements StudentDAO {
         return student;
     }
 
-    /**
-     *  get all tutors
-     */
+    //Get all tutors
     @Override
     public List<Student> getAll() throws SQLException{
         Connection con = Database.getConnection();
@@ -63,9 +59,8 @@ public class SQLStudentDAO implements StudentDAO {
         return students;
     }
 
-    /**
-     * insert method
-     */
+
+    // Insert method
     public void insert(Student newStudent) throws SQLException{
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO students (cf, name, surname, level) VALUES (?, ?, ?, ?)");
@@ -79,9 +74,7 @@ public class SQLStudentDAO implements StudentDAO {
         Database.closeConnection(con);
     }
 
-    /**
-     * update method
-     */
+    //Update method
     @Override
     public void update(Student updatedStudent) throws SQLException{
         Connection con = Database.getConnection();
@@ -96,9 +89,7 @@ public class SQLStudentDAO implements StudentDAO {
         Database.closeConnection(con);
     }
 
-    /**
-     * delete method
-     */
+    // Delete method
     @Override
     public boolean delete(String CF) throws SQLException{
         Connection con = Database.getConnection();

@@ -9,7 +9,7 @@ public interface LessonDAO extends DAO<Lesson, Integer>{
      *
      * @param studentCF The fiscal code of the student
      */
-    public List<Lesson> getStudentLessons(String studentCF) throws Exception;
+    public List<Lesson> getStudentLessons(String stCF) throws Exception;
 
     /**
      * Get all the lesson created by a Tutor that are booked

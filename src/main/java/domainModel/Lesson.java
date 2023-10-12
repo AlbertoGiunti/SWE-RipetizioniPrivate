@@ -67,6 +67,10 @@ public class Lesson {
         return id;
     }
 
+    public String getTitle(){
+        return title;
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -99,7 +103,7 @@ public class Lesson {
         return isOnline;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 

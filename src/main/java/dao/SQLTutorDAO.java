@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 public class SQLTutorDAO implements TutorDAO {
 
-    /**
-     * get a specific tutor
-     */
+    //Get a specific tutor
     @Override
     public Tutor get(String CF) throws SQLException{
         // Create a connection with the DB
@@ -38,9 +36,7 @@ public class SQLTutorDAO implements TutorDAO {
         return tutor;
     }
 
-    /**
-     *  get all tutors
-     */
+    //Get all tutors
     @Override
     public List<Tutor> getAll() throws SQLException{
         Connection con = Database.getConnection();
@@ -62,9 +58,7 @@ public class SQLTutorDAO implements TutorDAO {
         return tutors;
     }
 
-    /**
-     * insert method
-     */
+    //Insert method
     public void insert(Tutor newTutor) throws SQLException{
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO tutors (cf, name, surname, iban) VALUES (?, ?, ?, ?)");
@@ -78,9 +72,7 @@ public class SQLTutorDAO implements TutorDAO {
         Database.closeConnection(con);
     }
 
-    /**
-     * update method
-     */
+    // Update method
     @Override
     public void update(Tutor updatedTutor) throws SQLException{
         Connection con = Database.getConnection();
@@ -95,9 +87,7 @@ public class SQLTutorDAO implements TutorDAO {
         Database.closeConnection(con);
     }
 
-    /**
-     * delete method
-     */
+    // Delete method
     @Override
     public boolean delete(String CF) throws SQLException{
         Connection con = Database.getConnection();
