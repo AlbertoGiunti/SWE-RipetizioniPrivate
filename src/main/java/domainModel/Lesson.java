@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Lesson {
     // This is the ID of the lesson
-    private final String id;
+    private final int id;
     // This is the title of the lesson
     private String title;
     // This is the subject of the lesson
@@ -22,22 +22,24 @@ public class Lesson {
     // This indicates where the tutor can do the lesson
     private String zone;
     // This indicates if the lesson is online or not
-    private boolean isOnline;
+    private int isOnline;
     // This is the price of the lesson
     private float price;
     // This indicates if the lesson is booked or not, by default is "false"
-    private String booked = "false";
+    private int booked = 0;
     // This is the CF of the tutor and the CF of the student
     private final String tutorCF;
-    private String studentCF;
+    private String studentCF = null;
 
     // Constructor
-    public Lesson(String id, String title, String subject, String level, String description, LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime, String zone, boolean isOnline, float price, String tutorCF) {
+    public Lesson(int id, String title, String description, String subject,
+                  String level, LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime,
+                  String zone, int isOnline, float price, String tutorCF) {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.subject = subject;
         this.level = level;
-        this.description = description;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -61,7 +63,7 @@ public class Lesson {
     }
 
     // Getters
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -93,7 +95,7 @@ public class Lesson {
         return zone;
     }
 
-    public boolean isOnline() {
+    public int isOnline() {
         return isOnline;
     }
 
@@ -101,7 +103,7 @@ public class Lesson {
         return price;
     }
 
-    public String getBooked() {
+    public int getBooked() {
         return booked;
     }
 
@@ -114,7 +116,7 @@ public class Lesson {
     }
 
     // Setters
-    public void setBooked(String booked) {
+    public void setBooked(int booked) {
         this.booked = booked;
     }
 

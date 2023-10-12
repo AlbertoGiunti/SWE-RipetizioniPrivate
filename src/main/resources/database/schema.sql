@@ -28,10 +28,12 @@ CREATE TABLE IF NOT EXISTS students
 CREATE TABLE IF NOT EXISTS lessons
 (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    title           TEXT NOT NULL,
     tutorCF         TEXT NOT NULL,
     studentCF       TEXT,
+    title           TEXT NOT NULL,
     description     TEXT,
+    subject         TEXT NOT NULL,
+    level           TEXT NOT NULL,
     date            TEXT NOT NULL,
     startTime       TEXT NOT NULL,
     endTime         TEXT NOT NULL,
@@ -39,8 +41,6 @@ CREATE TABLE IF NOT EXISTS lessons
     isOnline        INTEGER NOT NULL DEFAULT 0,
     booked          INTEGER NOT NULL DEFAULT 0,
     price           FLOAT NOT NULL CHECK(price >= 0),
-    subject         TEXT NOT NULL,
-    level           TEXT NOT NULL,
     FOREIGN KEY (tutorCF) REFERENCES tutors (cf) ON UPDATE CASCADE ON DELETE CASCADE
     FOREIGN KEY (studentCF) REFERENCES students (cf) ON UPDATE CASCADE ON DELETE CASCADE
 );
