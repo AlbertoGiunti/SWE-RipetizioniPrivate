@@ -3,8 +3,9 @@
 
 -- Drop tables if they already exist
 DROP TABLE IF EXISTS tutors;
-DROP TABLE IF EXISTS lessons;
+DROP TABLE IF EXISTS advertisements;
 DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS ads;
 
 -- Table: tutors
 CREATE TABLE IF NOT EXISTS tutors
@@ -24,8 +25,8 @@ CREATE TABLE IF NOT EXISTS students
     level       TEXT NOT NULL
 );
 
--- Table: lessons
-CREATE TABLE IF NOT EXISTS lessons
+-- Table: advertisements
+CREATE TABLE IF NOT EXISTS advertisements
 (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     tutorCF         TEXT NOT NULL,
@@ -39,8 +40,16 @@ CREATE TABLE IF NOT EXISTS lessons
     endTime         TEXT NOT NULL,
     zone            TEXT,
     isOnline        INTEGER NOT NULL DEFAULT 0,
-    booked          INTEGER NOT NULL DEFAULT 0,
     price           FLOAT NOT NULL CHECK(price >= 0),
     FOREIGN KEY (tutorCF) REFERENCES tutors (cf) ON UPDATE CASCADE ON DELETE CASCADE
-    FOREIGN KEY (studentCF) REFERENCES students (cf) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Table: lessons
+CREATE TABLE IF NOT EXISTS lessons
+(
+    adID        INTEGER,
+    studentCF   TEXT NOT NULL,
+    PRIMARY KEY (adID, studentCF),
+    FOREIGN KEY (studentCF) REFERENCES students (cf) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (adID) REFERENCES ads (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
