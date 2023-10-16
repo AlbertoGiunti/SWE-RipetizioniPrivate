@@ -76,13 +76,13 @@ public class SQLStudentDAO implements StudentDAO {
 
     //Update method
     @Override
-    public void update(Student updatedStudent) throws SQLException{
+    public void update(Student toUpdateStudent) throws SQLException{
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("UPDATE students SET name = ?, surname = ?, level = ? WHERE cf = ?");
-        ps.setString(1, updatedStudent.getName());
-        ps.setString(2, updatedStudent.getSurname());
-        ps.setString(3, updatedStudent.getLevel());
-        ps.setString(4, updatedStudent.getCF());
+        ps.setString(1, toUpdateStudent.getName());
+        ps.setString(2, toUpdateStudent.getSurname());
+        ps.setString(3, toUpdateStudent.getLevel());
+        ps.setString(4, toUpdateStudent.getCF());
 
         ps.executeUpdate();
         ps.close();

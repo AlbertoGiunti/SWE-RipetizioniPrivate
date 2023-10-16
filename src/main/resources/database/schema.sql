@@ -3,9 +3,9 @@
 
 -- Drop tables if they already exist
 DROP TABLE IF EXISTS tutors;
-DROP TABLE IF EXISTS advertisements;
+DROP TABLE IF EXISTS lessons;
 DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS ads;
+DROP TABLE IF EXISTS advertisements;
 
 -- Table: tutors
 CREATE TABLE IF NOT EXISTS tutors

@@ -2,6 +2,8 @@ package dao;
 
 import domainModel.Advertisement;
 import domainModel.Lesson;
+import domainModel.Tutor;
+import domainModel.Student;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -22,7 +24,7 @@ public class SQLLessonDAO implements LessonDAO {
     public Lesson get(Integer id) throws SQLException {
         Connection con = Database.getConnection();
         Lesson lesson = null;
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM lessons WHERE id = ?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM lessons WHERE adID = ?");
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
 
@@ -70,7 +72,7 @@ public class SQLLessonDAO implements LessonDAO {
     public void insert(Lesson lesson) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
-                "INSERT INTO lessons (id, studentCF) VALUES (?, ?)");
+                "INSERT INTO lessons (adID, studentCF) VALUES (?, ?)");
         // id is not needed because is autoincremented
         ps.setInt(1, lesson.getAdID());
         ps.setString(2, lesson.getStudentCF());
@@ -86,7 +88,7 @@ public class SQLLessonDAO implements LessonDAO {
     public void update(Lesson lesson) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
-                "UPDATE lessons SET studentCF = ? WHERE id =?");
+                "UPDATE lessons SET studentCF = ? WHERE adID =?");
         ps.setString(1, lesson.getStudentCF());
         ps.setInt(2, lesson.getAdID());
 
@@ -103,13 +105,47 @@ public class SQLLessonDAO implements LessonDAO {
             return false;
         }
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement("DELETE FROM lessons WHERE id = ?");
+        PreparedStatement ps = con.prepareStatement("DELETE FROM lessons WHERE adID = ?");
         ps.setInt(1, id);
         int rows = ps.executeUpdate();
 
         ps.close();
         Database.closeConnection(con);
         return rows > 0;
+    }
+
+    public List<Lesson> getTutorLessons(String tCF) throws Exception{
+        Connection con = Database.getConnection();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM lessons JOIN advertisements ON adID = id WHERE tutorCF = ?");
+        ps.setString(1, tCF);
+        ResultSet rs = ps.executeQuery();
+
+        List<Lesson> lessons = new ArrayList<>();
+        while (rs.next()) {
+            lessons.add(this.get(rs.getInt("adID"))); // Usa il metodo get di questa classe
+        }
+
+        rs.close();
+        ps.close();
+        Database.closeConnection(con);
+        return lessons;
+    }
+
+    public List<Lesson> getStudentLessons(String sCF) throws Exception{
+        Connection con = Database.getConnection();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM lessons WHERE studentCF = ?");
+        ps.setString(1, sCF);
+        ResultSet rs = ps.executeQuery();
+
+        List<Lesson> lessons = new ArrayList<>();
+        while (rs.next()) {
+            lessons.add(this.get(rs.getInt("adID"))); // Usa il metodo get di questa classe
+        }
+
+        rs.close();
+        ps.close();
+        Database.closeConnection(con);
+        return lessons;
     }
 
 }

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 
 
-public class SQLAdvertisementsDAO implements AdvertisementsDAO {
+public class SQLAdvertisementDAO implements AdvertisementDAO {
     private final TutorDAO tutorDAO;
 
-    public SQLAdvertisementsDAO(TutorDAO tutorDAO, StudentDAO studentDAO){
+    public SQLAdvertisementDAO(TutorDAO tutorDAO, StudentDAO studentDAO){
         this.tutorDAO = tutorDAO;
     }
 
@@ -85,7 +85,7 @@ public class SQLAdvertisementsDAO implements AdvertisementsDAO {
     // Insert method
 
     @Override
-    public void insert(Advertisement advertisement) throws SQLException {
+    public void insert(Advertisement advertisement) throws Exception {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement(
                 "INSERT INTO advertisements (title, description, subject, level, date, startTime, endTime, zone, isOnline, price, tutorCF) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -148,6 +148,7 @@ public class SQLAdvertisementsDAO implements AdvertisementsDAO {
         return rows > 0;
     }
 
+    @Override
     // Get all the advertisements created by a Tutor
     public List<Advertisement> getTutorAdvertisements(String tCF) throws SQLException {
         Connection con = Database.getConnection();
@@ -186,6 +187,19 @@ public class SQLAdvertisementsDAO implements AdvertisementsDAO {
         ps.close();
         Database.closeConnection(con);
         return advertisements;
+    }
+
+    @Override
+    public int getLastAdID() throws SQLException{
+        Connection connection = Database.getConnection();
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT MAX(id) FROM main.advertisements");
+        int id = rs.getInt(1) + 1;
+
+        rs.close();
+        stmt.close();
+        Database.closeConnection(connection);
+        return id;
     }
 
 }
