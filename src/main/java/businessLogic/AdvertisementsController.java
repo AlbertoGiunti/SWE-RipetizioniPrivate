@@ -7,6 +7,8 @@ import domainModel.Tutor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.util.Collections.unmodifiableList;
+
 
 public class AdvertisementsController {
     private final AdvertisementDAO advertisementDAO;
@@ -20,20 +22,17 @@ public class AdvertisementsController {
     /**
      * Adds a new advertisement to the list
      *
-     * int id, String title, String description, String subject,
-     *                          String level, LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime,
-     *                          String zone, int isOnline, float price, String tutorCF
-     * @param title
-     * @param description
-     * @param subject
-     * @param level
-     * @param date
-     * @param startTime
-     * @param endTime
-     * @param zone
-     * @param isOnline
-     * @param price
-     * @param tutorCF
+     * @param title The title of the advertisement
+     * @param description The description of the advertisement
+     * @param subject The subject of the lesson
+     * @param level The level of the lesson
+     * @param date The date of the lesson
+     * @param startTime The time of start of the lesson
+     * @param endTime The time of end of the lesson
+     * @param zone Where the tutor can do the lesson
+     * @param isOnline Tells if the lesson is online or not
+     * @param price The price of the lesson
+     * @param tutorCF The tutor who posted the advertisement
      *
      * @return The id of the newly created advertisement
      *
@@ -68,4 +67,43 @@ public class AdvertisementsController {
         return ad.getId();
 
     }
+
+    /**
+     * Remove an advertisement
+     *
+     * @param id The id of the advertisement to delete
+     *
+     * @return true if successful, false otherwise
+     *
+     * @throws Exception bubbles up exceptions of AdvertisementDAO::delete()
+     */
+    //TODO lo può chiamare solo il professore proprietario del'advertisement, Se è prenotato deve cancellare la lezione, Observer!!
+    public boolean removeAdvertisement(int id) throws Exception{
+        return advertisementDAO.delete(id);
+    }
+
+    /**
+     * Returns the given advertisement
+     *
+     * @param id The advertisement id to fetch
+     *
+     * @return The advertisement
+     *
+     * @throws Exception bubbles up exceptions of AdvertisementDAO::get()
+     */
+    public Advertisement getAdvertisement(int id) throws Exception{
+        return advertisementDAO.get(id);
+    }
+
+    /**
+     * Returns a read-only list of advertisements
+     *
+     * @return The list of advertisements
+     *
+     * @throws Exception bubbles up exceptions of AdvertisementDAO::getAll()
+     */
+    public List<Advertisement> getAll() throws Exception {
+        return unmodifiableList(this.advertisementDAO.getAll());
+    }
+
 }
