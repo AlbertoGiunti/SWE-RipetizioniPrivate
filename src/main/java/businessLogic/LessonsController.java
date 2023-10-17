@@ -106,4 +106,25 @@ public class LessonsController {
         return lessonDAO.getTutorLessons(tutorCF);
     }
 
+    /**
+     * Get all the lessons
+     *
+     * @return The list of all the lessons
+     * @throws Exception
+     */
+    public List<Lesson> getAll() throws Exception{
+        return lessonDAO.getAll();
+    }
+
+    /**
+     * Delete lesson, used by the tutor who created the lesson
+     *
+     * @param id The lesson id
+     *
+     * @throws Exception bubbles up exceptions of LessonDAO::deleteLesson()
+     */
+    public boolean deleteLesson(int id) throws Exception  {
+        //TODO notify Student?
+        return lessonDAO.delete(id);
+    }
 }

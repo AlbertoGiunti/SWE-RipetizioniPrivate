@@ -1,7 +1,9 @@
 package businessLogic;
 
 import dao.AdvertisementDAO;
+import dao.LessonDAO;
 import domainModel.Advertisement;
+import domainModel.Lesson;
 import domainModel.Tutor;
 
 import java.time.LocalDateTime;
@@ -12,11 +14,13 @@ import static java.util.Collections.unmodifiableList;
 
 public class AdvertisementsController {
     private final AdvertisementDAO advertisementDAO;
+    private final LessonsController lessonsController;
     private final PeopleController<Tutor> tutorsController;
 
-    public AdvertisementsController(AdvertisementDAO advertisementDAO, PeopleController<Tutor> tutorsController){
+    public AdvertisementsController(AdvertisementDAO advertisementDAO, PeopleController<Tutor> tutorsController, LessonsController lessonsController){
         this.advertisementDAO = advertisementDAO;
         this.tutorsController = tutorsController;
+        this.lessonsController = lessonsController;
     }
 
     /**
@@ -77,8 +81,17 @@ public class AdvertisementsController {
      *
      * @throws Exception bubbles up exceptions of AdvertisementDAO::delete()
      */
-    //TODO lo può chiamare solo il professore proprietario del'advertisement, Se è prenotato deve cancellare la lezione, Observer!!
+    //TODO lo può chiamare solo il professore proprietario del'advertisement
+    //TODO Ricontrolla se è corretto come cancella la lezione
+    //TODO Deve notificare lo studente?
     public boolean removeAdvertisement(int id) throws Exception{
+        List<Lesson> lessons = lessonsController.getLessonsWhereTutorIsBooked(advertisementDAO.get(id).getTutorCF()); // Prendo tutte le lezioni di quel tutor
+        for(Lesson l: lessons){
+            if(l.getAdID() == id){
+                lessonsController.deleteLesson(id);
+            }
+        }
+
         return advertisementDAO.delete(id);
     }
 
@@ -105,5 +118,6 @@ public class AdvertisementsController {
     public List<Advertisement> getAll() throws Exception {
         return unmodifiableList(this.advertisementDAO.getAll());
     }
+
 
 }
