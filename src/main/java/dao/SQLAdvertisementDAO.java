@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 public class SQLAdvertisementDAO implements AdvertisementDAO {
@@ -31,12 +32,12 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
                     rs.getString("description"),
                     rs.getString("subject"),
                     rs.getString("level"),
-                    LocalDateTime.parse(rs.getString("date")),
+                    LocalDate.parse(rs.getString("date")),
                     LocalDateTime.parse(rs.getString("startTime")),
                     LocalDateTime.parse(rs.getString("endTime")),
                     rs.getString("zone"),
                     rs.getInt("isOnline"),
-                    rs.getFloat("price"),
+                    rs.getDouble("price"),
                     rs.getString("tutorCF")
             );
 
@@ -64,7 +65,7 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
                     rs.getString("description"),
                     rs.getString("subject"),
                     rs.getString("level"),
-                    LocalDateTime.parse(rs.getString("date")),
+                    LocalDate.parse(rs.getString("date")),
                     LocalDateTime.parse(rs.getString("startTime")),
                     LocalDateTime.parse(rs.getString("endTime")),
                     rs.getString("zone"),
@@ -99,7 +100,7 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
         ps.setString(7, advertisement.getEndTime().toString());
         ps.setString(8, advertisement.getZone());
         ps.setInt(9, advertisement.isOnline());
-        ps.setFloat(10, advertisement.getPrice());
+        ps.setDouble(10, advertisement.getPrice());
         ps.setString(11, advertisement.getTutorCF());
 
         ps.close();
@@ -122,7 +123,7 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
         ps.setString(7, advertisement.getEndTime().toString());
         ps.setString(8, advertisement.getZone());
         ps.setInt(9, advertisement.isOnline());
-        ps.setFloat(10, advertisement.getPrice());
+        ps.setDouble(10, advertisement.getPrice());
         ps.setInt(11, advertisement.getId());
 
         ps.close();
@@ -153,7 +154,7 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
     public List<Advertisement> getTutorAdvertisements(String tCF) throws SQLException {
         Connection con = Database.getConnection();
         //TODO riguarda questa query
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM advertisements LEFT JOIN lessons ON advertisements.id == lessons.id WHERE tutorCF = ? AND lessons.studentCF == null");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM advertisements LEFT JOIN lessons ON advertisements.id == lessons.adID WHERE tutorCF = ? AND lessons.studentCF == null");
         ps.setString(1, tCF);
         ResultSet rs = ps.executeQuery();
 

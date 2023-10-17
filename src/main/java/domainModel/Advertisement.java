@@ -1,6 +1,7 @@
 package domainModel;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Advertisement {
@@ -15,7 +16,7 @@ public class Advertisement {
     // This is the description of the advertisement
     private String description;
     // This is the date of the lesson
-    private LocalDateTime date;
+    private LocalDate date;
     // This is the start time of the lesson and the end time of the lesson
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -24,14 +25,14 @@ public class Advertisement {
     // This indicates if the lesson is online or not
     private int isOnline;
     // This is the price of the lesson
-    private float price;
+    private double price;
     // This is the CF of the tutor
     private final String tutorCF;
 
     // Constructor
     public Advertisement(int id, String title, String description, String subject,
-                         String level, LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime,
-                         String zone, int isOnline, float price, String tutorCF) {
+                         String level, LocalDate date, LocalDateTime startTime, LocalDateTime endTime,
+                         String zone, int isOnline, double price, String tutorCF) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -80,7 +81,7 @@ public class Advertisement {
         return description;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -100,7 +101,7 @@ public class Advertisement {
         return isOnline;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 

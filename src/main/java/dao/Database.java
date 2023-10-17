@@ -21,7 +21,7 @@ public class Database {
      *
      * @param dbName Name of the database file
      */
-    public static void setDbName(String dbName) {
+    public static void setDatabase(String dbName) {
         Database.dbName = dbName;
     }
 
@@ -61,7 +61,7 @@ public class Database {
      * @throws IOException If the schema.sql file is not found
      * @throws SQLException SQL query error
      */
-    public static int initDatabase() throws IOException, SQLException{
+    public static int initDatabase() throws IOException, SQLException {
         StringBuilder resultStringBuilder = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader("src/main/resources/database/schema.sql"));
         String line;

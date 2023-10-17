@@ -25,7 +25,7 @@ public class LessonsController {
      * @param studentCF The fiscal code of the student for whom to book the lesson for
      * @param adID The id of the advertisement to book
      *             
-     * @throws Exception when adID doesn't exist and bubbles up exceptions of //TODO Che eccezioni lancia?
+     * @throws Exception when adID doesn't exist and bubbles up exceptions of LessonDAO::insert(), LessonDAO::getAll(), LessonDAO::getStudentLessons
      */
     public void bookLesson(String studentCF, int adID) throws Exception{
         Advertisement ad = advertisementsController.getAdvertisement(adID);

@@ -7,6 +7,7 @@ import domainModel.Lesson;
 import domainModel.Tutor;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
@@ -14,13 +15,13 @@ import static java.util.Collections.unmodifiableList;
 
 public class AdvertisementsController {
     private final AdvertisementDAO advertisementDAO;
-    private final LessonsController lessonsController;
     private final PeopleController<Tutor> tutorsController;
+    private final LessonDAO lessonDAO;
 
-    public AdvertisementsController(AdvertisementDAO advertisementDAO, PeopleController<Tutor> tutorsController, LessonsController lessonsController){
+    public AdvertisementsController(AdvertisementDAO advertisementDAO, PeopleController<Tutor> tutorsController, LessonDAO lessonDAO){
         this.advertisementDAO = advertisementDAO;
         this.tutorsController = tutorsController;
-        this.lessonsController = lessonsController;
+        this.lessonDAO = lessonDAO;
     }
 
     /**
@@ -43,7 +44,7 @@ public class AdvertisementsController {
      * @throws Exception If the tutor is not found, bubbles up exceptions of AdvertisementDAO::insert()
      * @throws IllegalArgumentException If the trainer is already occupied in the given time range
      */
-    public int addAdvertisement(String title, String description, String subject, String level, LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime, String zone, int isOnline, float price, String tutorCF) throws Exception {
+    public int addAdvertisement(String title, String description, String subject, String level, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, String zone, int isOnline, double price, String tutorCF) throws Exception {
         Tutor tutor = tutorsController.getPerson(tutorCF);
         if (tutor == null)
             throw new IllegalArgumentException("Tutor not found");
@@ -85,10 +86,11 @@ public class AdvertisementsController {
     //TODO Ricontrolla se è corretto come cancella la lezione
     //TODO Deve notificare lo studente?
     public boolean removeAdvertisement(int id) throws Exception{
-        List<Lesson> lessons = lessonsController.getLessonsWhereTutorIsBooked(advertisementDAO.get(id).getTutorCF()); // Prendo tutte le lezioni di quel tutor
+        List<Lesson> lessons = lessonDAO.getTutorLessons(advertisementDAO.get(id).getTutorCF()); // Prendo tutte le lezioni di quel tutor
         for(Lesson l: lessons){
             if(l.getAdID() == id){
-                lessonsController.deleteLesson(id);
+                //TODO notifica il lessonsController così che cancelli la lezione
+                //TODO prima avevo passato il lessonsController ma così non potevo dichiarare advertisementsController senza prima aver dichiarato il lessonsController e viceversa!!
             }
         }
 
