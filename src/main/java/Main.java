@@ -13,7 +13,7 @@ public class Main {
         // DAOs
         TutorDAO tutorDAO = new SQLTutorDAO();
         StudentDAO studentDAO = new SQLStudentDAO();
-        AdvertisementDAO advertisementDAO = new SQLAdvertisementDAO(tutorDAO, studentDAO);
+        AdvertisementDAO advertisementDAO = new SQLAdvertisementDAO(tutorDAO);
         LessonDAO lessonDAO = new SQLLessonDAO(studentDAO);
 
         // Controllers

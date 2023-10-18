@@ -27,7 +27,7 @@ public class SQLStudentDAO implements StudentDAO {
                     rs.getString("cf"),
                     rs.getString("name"),
                     rs.getString("surname"),
-                    rs.getString("iban")
+                    rs.getString("level")
             );
         }
 

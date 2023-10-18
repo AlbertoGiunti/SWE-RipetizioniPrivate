@@ -67,6 +67,7 @@ public class AdvertisementsController {
             }
         }
 
+
         Advertisement ad = new Advertisement(advertisementDAO.getLastAdID(), title, description, subject, level, date, startTime, endTime, zone, isOnline, price, tutorCF);
         advertisementDAO.insert(ad);
         return ad.getId();

@@ -52,7 +52,7 @@ public class SQLLessonDAO implements LessonDAO {
 
         while (rs.next()){
             Lesson lesson = new Lesson(
-                    rs.getInt("id"),
+                    rs.getInt("adID"),
                     rs.getString("studentCF")
             );
 
@@ -76,6 +76,7 @@ public class SQLLessonDAO implements LessonDAO {
         // id is not needed because is autoincremented
         ps.setInt(1, lesson.getAdID());
         ps.setString(2, lesson.getStudentCF());
+        ps.executeUpdate();
 
         ps.close();
         Database.closeConnection(con);

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class SQLAdvertisementDAO implements AdvertisementDAO {
     private final TutorDAO tutorDAO;
 
-    public SQLAdvertisementDAO(TutorDAO tutorDAO, StudentDAO studentDAO){
+    public SQLAdvertisementDAO(TutorDAO tutorDAO){
         this.tutorDAO = tutorDAO;
     }
 
@@ -88,8 +88,7 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
     @Override
     public void insert(Advertisement advertisement) throws Exception {
         Connection con = Database.getConnection();
-        PreparedStatement ps = con.prepareStatement(
-                "INSERT INTO advertisements (title, description, subject, level, date, startTime, endTime, zone, isOnline, price, tutorCF) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO advertisements (title, description, subject, level, date, startTime, endTime, zone, isOnline, price, tutorCF) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         // id is not needed because is autoincremented
         ps.setString(1, advertisement.getTitle());
         ps.setString(2, advertisement.getDescription());
@@ -102,6 +101,8 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
         ps.setInt(9, advertisement.isOnline());
         ps.setDouble(10, advertisement.getPrice());
         ps.setString(11, advertisement.getTutorCF());
+
+        ps.executeUpdate();
 
         ps.close();
         Database.closeConnection(con);
@@ -139,7 +140,6 @@ public class SQLAdvertisementDAO implements AdvertisementDAO {
             return false;
         }
         Connection con = Database.getConnection();
-        //TODO Cancella anche le lezioni?
         PreparedStatement ps = con.prepareStatement("DELETE FROM advertisements WHERE id = ?");
         ps.setInt(1, id);
         int rows = ps.executeUpdate();

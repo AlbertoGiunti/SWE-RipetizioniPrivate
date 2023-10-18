@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS advertisements;
 -- Table: tutors
 CREATE TABLE IF NOT EXISTS tutors
 (
-    cf TEXT PRIMARY KEY,
+    cf          TEXT PRIMARY KEY,
     name        TEXT NOT NULL,
     surname     TEXT NOT NULL,
     iban        TEXT NOT NULL
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS tutors
 -- Table: students
 CREATE TABLE IF NOT EXISTS students
 (
-    cf TEXT PRIMARY KEY,
+    cf          TEXT PRIMARY KEY,
     name        TEXT NOT NULL,
     surname     TEXT NOT NULL,
     level       TEXT NOT NULL
@@ -51,5 +51,5 @@ CREATE TABLE IF NOT EXISTS lessons
     studentCF   TEXT NOT NULL,
     PRIMARY KEY (adID, studentCF),
     FOREIGN KEY (studentCF) REFERENCES students (cf) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (adID) REFERENCES ads (id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (adID) REFERENCES advertisements (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
